@@ -2,6 +2,28 @@
 ```bash
 npm i express 
 npm i -D @types/express
+npm i -D @types/node
+npm i -D typescript
+```
+
+## Initialize tsconfig.json file
+```bash
+npx tsc --init
+```
+## Change these in tsconfig.json file
+```json
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "target": "esnext",
+    "module": "nodenext",
+    "rewriteRelativeImportExtensions": true,
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "types": ["vitest/globals"]
+  }
+}
 ```
 
 ## Important Points
@@ -20,3 +42,5 @@ npm i -D @types/express
     "dev": "node --watch src/index.ts"
   },
 ```
+
+## Make the env.ts file
