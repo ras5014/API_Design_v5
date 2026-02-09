@@ -10,6 +10,7 @@ const isTest = process.env.APP_STAGE === "test";
 
 // Load .env files based on environment
 if (isDevelopment) {
+  loadEnv("local", false); // Loads .env.local without overriding existing variables
   loadEnv(); // Loads .env
 } else if (isTest) {
   loadEnv("test"); // Loads .env.test
