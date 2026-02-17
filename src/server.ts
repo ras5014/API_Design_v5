@@ -23,7 +23,10 @@ app.get("/health", (req, res) => {
 });
 
 // Routes
-// app.use("/api/auth");
+app.use(
+  "/api/auth",
+  await import("./modules/auth/auth.router.ts").then((mod) => mod.default),
+);
 // app.use("/api/users");
 // app.use("/api/habits");
 
