@@ -1,10 +1,31 @@
 import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
+import { isTestEnv } from "./config/env.ts";
 
 const app = express();
 
+// Global middleware
+app.use(helmet()); // Set security-related HTTP headers
+app.use(cors()); // Enable CORS for all routes (you can configure this further if needed)
+app.use(express.json()); // To parse JSON request bodies
+app.use(express.urlencoded({ extended: true })); // To handle URL-encoded data (e.g., form submissions)
+app.use(
+  morgan("dev", {
+    // Use 'dev' format for concise colored output
+    skip: () => isTestEnv(), // Skip logging in test environment
+  }),
+);
+
 app.get("/health", (req, res) => {
-  res.json({ message: "hello" }).status(200);
+  res.status(200).json({ status: "ok" });
 });
+
+// Routes
+// app.use("/api/auth");
+// app.use("/api/users");
+// app.use("/api/habits");
 
 export { app };
 

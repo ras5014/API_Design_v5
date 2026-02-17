@@ -1,16 +1,20 @@
 ## Install express
+
 ```bash
-npm i express 
+npm i express
 npm i -D @types/express
 npm i -D @types/node
 npm i -D typescript
 ```
 
 ## Initialize tsconfig.json file
+
 ```bash
 npx tsc --init
 ```
+
 ## Change these in tsconfig.json file
+
 ```json
 {
   "compilerOptions": {
@@ -27,14 +31,17 @@ npx tsc --init
 ```
 
 ## Important Points
+
 - typescript is for development time
 - zod is for run time
 - .env.example file is there to tell a new user on what env variables is required to run the app
 
 ## Install some more packages
-- npm i custom-env zod dotenv 
 
-## Gotta change these to run 
+- npm i custom-env zod dotenv
+
+## Gotta change these to run
+
 ```json
 "main": "src/index.ts",
   "type": "module",
@@ -44,3 +51,10 @@ npx tsc --init
 ```
 
 ## Make the env.ts file
+
+## Install Global Middlewares
+
+```bash
+npm i cors helmet morgan
+npi i -D @types/cors @types/morgan
+```
