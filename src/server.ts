@@ -22,6 +22,7 @@ app.get("/health", (req, res) => {
   res.status(200).json({ status: "ok" });
 });
 
+// Note: Starting with Express 5, route handlers and middleware that return a Promise will call next(value) automatically when they reject or throw an error.
 // Routes
 app.use(
   "/api/auth",
