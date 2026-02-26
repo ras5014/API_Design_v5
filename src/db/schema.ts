@@ -1,4 +1,5 @@
 // Follow drizzle documentation for ORM installation
+import { relations } from "drizzle-orm";
 import {
   pgTable,
   uuid,
@@ -61,7 +62,7 @@ export const tags = pgTable("tags", {
 // Junction table for many-to-many relationship between habits and tags
 export const habitTags = pgTable("habit_tags", {
   id: uuid("id").primaryKey().defaultRandom(),
-  habitUd: uuid("habit_id")
+  habitId: uuid("habit_id")
     .references(() => habits.id, {
       onDelete: "cascade",
     })
@@ -71,3 +72,51 @@ export const habitTags = pgTable("habit_tags", {
     .notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
+
+/**
+ * Relationships:
+ * - One User has many Habits (users.id -> habits.userId)
+ * - One Habit has many Entries (habits.id -> entries.habitId)
+ * - Many Habits can have many Tags through habit_tags (habits.id -> habit_tags.habitId, tags.id -> habit_tags.tagId)
+ * - These relationships allow us to easily query (main use case)
+ * - These relationships code is written to add e.g. profile field to user table
+ */
+
+// User - Habits relationship (one-to-many)
+export const userRelations = relations(users, ({ many }) => ({
+  habits: many(habits), // habits field will be added to user object, allowing us to fetch all habits for a user
+}));
+
+export const habitsRelations = relations(habits, ({ one, many }) => ({
+  user: one(users, {
+    fields: [habits.userId],
+    references: [users.id],
+  }),
+  // Habits - Entries relationship (one-to-many)
+  entries: many(entries),
+  // Habits - habitTags relationship (many-to-many)
+  habitTags: many(habitTags),
+}));
+
+export const entriesRelations = relations(entries, ({ one }) => ({
+  habit: one(habits, {
+    fields: [entries.habitId],
+    references: [habits.id],
+  }),
+}));
+
+export const tagsRelations = relations(tags, ({ many }) => ({
+  habitTags: many(habitTags),
+}));
+
+// Junction table relations
+export const habitTagsRelations = relations(habitTags, ({ one }) => ({
+  habit: one(habits, {
+    fields: [habitTags.habitId],
+    references: [habits.id],
+  }),
+  tag: one(tags, {
+    fields: [habitTags.tagId],
+    references: [tags.id],
+  }),
+}));
