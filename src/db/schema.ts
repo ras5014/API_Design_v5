@@ -9,6 +9,7 @@ import {
   boolean,
   integer,
 } from "drizzle-orm/pg-core";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod"; // For Zod schema generation
 
 // Users table - core authentication and profile
 export const users = pgTable("users", {
@@ -120,3 +121,29 @@ export const habitTagsRelations = relations(habitTags, ({ one }) => ({
     references: [tags.id],
   }),
 }));
+
+// Typescript Integration: Automatically infer types from tables
+export type User = typeof users.$inferSelect;
+export type Habit = typeof habits.$inferSelect;
+export type Entry = typeof entries.$inferSelect;
+export type Tag = typeof tags.$inferSelect;
+export type HabitTag = typeof habitTags.$inferSelect;
+
+/**
+ * ZOD Integration:
+ * Create Zod schemas for validation,
+ * because inserting data doesn't
+ * require all fields (e.g. id, createdAt) and we want to validate input data
+ */
+
+// Auto generated ZOD Schemas for insert and select operations
+export const insertUserSchema = createInsertSchema(users);
+export const selectUserSchema = createSelectSchema(users);
+export const insertHabitSchema = createInsertSchema(habits);
+export const selectHabitSchema = createSelectSchema(habits);
+export const insertEntrySchema = createInsertSchema(entries);
+export const selectEntrySchema = createSelectSchema(entries);
+export const insertTagSchema = createInsertSchema(tags);
+export const selectTagSchema = createSelectSchema(tags);
+export const insertHabitTagSchema = createInsertSchema(habitTags);
+export const selectHabitTagSchema = createSelectSchema(habitTags);
