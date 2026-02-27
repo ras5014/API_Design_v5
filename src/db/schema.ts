@@ -134,6 +134,7 @@ export type HabitTag = typeof habitTags.$inferSelect;
  * Create Zod schemas for validation,
  * because inserting data doesn't
  * require all fields (e.g. id, createdAt) and we want to validate input data
+ * Insert schema & select schema are different because of this, insert schema will have optional fields for auto-generated columns
  */
 
 // Auto generated ZOD Schemas for insert and select operations
