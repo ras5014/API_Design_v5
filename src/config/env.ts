@@ -33,7 +33,7 @@ const envSchema = z.object({
   HOST: z.string().default("localhost"),
 
   // Database configuration
-  DATABASE_URL: z.string().startsWith("postgres://"),
+  DATABASE_URL: z.string().startsWith("postgresql://"),
 
   // JWT & Authentication
   JWT_SECRET: z
