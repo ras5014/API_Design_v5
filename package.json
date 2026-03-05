@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/ras5014/API_Design_v5#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "custom-env": "^2.0.6",
     "dotenv": "^17.3.1",
@@ -38,6 +39,7 @@
   },
   "devDependencies": {
     "@epic-web/remember": "^1.1.0",
+    "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/morgan": "^1.9.10",

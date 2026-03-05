@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { validateBody } from "../../middlewares/validation.ts";
-import { registerSchema } from "./auth.types.ts";
+import { insertUserSchema } from "../../db/schema.ts";
 
 const router = Router();
 
-router.post("/register", validateBody(registerSchema), (req, res) => {
+router.post("/register", validateBody(insertUserSchema), (req, res) => {
   res.status(201).json({ message: "user signed up" });
 });
 
