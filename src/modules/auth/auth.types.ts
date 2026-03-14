@@ -1,0 +1,1 @@
+// If you don't want to use drizzle types then you can use this file to define your own types for auth module
