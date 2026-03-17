@@ -41,6 +41,9 @@ const envSchema = z.object({
     .min(32, "JWT_SECRET must be at least 32 characters long"),
 
   JWT_EXPIRES_IN: z.string().default("7d"),
+
+  // Security
+  BCRYPT_SALT_ROUNDS: z.coerce.number().min(10).max(20).default(12),
 });
 
 // Type inference from schema

@@ -1,0 +1,29 @@
+import type { Request, Response, NextFunction } from "express";
+import { verifyToken, type JwtPayload } from "../utils/jwt.ts";
+
+// This type is to add the user property to the express Request object
+export interface AuthenticatedRequest extends Request {
+  user?: JwtPayload;
+}
+
+export const authenticateToken = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1]; // Bearer <token>
+
+    if (!token) {
+      return res.status(401).json({ error: "Access token required" });
+    }
+
+    const payload = await verifyToken(token);
+    req.user = payload;
+    next();
+  } catch (error) {
+    console.error("Error in authenticateToken middleware:", error);
+    return res.status(403).json({ error: "Invalid or expired token" });
+  }
+};

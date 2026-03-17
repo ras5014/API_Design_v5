@@ -29,7 +29,10 @@ app.use(
   await import("./modules/auth/auth.router.ts").then((mod) => mod.default),
 );
 // app.use("/api/users");
-// app.use("/api/habits");
+app.use(
+  "/api/habits",
+  await import("./modules/habits/habit.router.ts").then((mod) => mod.default),
+);
 
 export { app };
 
