@@ -1,14 +1,13 @@
 import { Router } from "express";
 import { validateBody } from "../../middlewares/validation.ts";
 import { insertUserSchema } from "../../db/schema.ts";
-import { register } from "./auth.controller.ts";
+import { login, register } from "./auth.controller.ts";
+import { loginSchema } from "./auth.types.ts";
 
 const router = Router();
 
 router.post("/register", validateBody(insertUserSchema), register);
 
-router.post("/login", (req, res) => {
-  res.status(201).json({ message: "user logged in" });
-});
+router.post("/login", validateBody(loginSchema), login);
 
 export default router;
