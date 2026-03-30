@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import { isTestEnv } from "./config/env.ts";
+import { errorHandler, notFound } from "./middlewares/errorHandler.ts";
 
 const app = express();
 
@@ -33,6 +34,12 @@ app.use(
   "/api/habits",
   await import("./modules/habits/habit.router.ts").then((mod) => mod.default),
 );
+
+// Error handling middleware
+app.use(notFound);
+
+// Global Error Handler (must be the last middleware)
+app.use(errorHandler);
 
 export { app };
 
