@@ -123,6 +123,11 @@ export const habitTagsRelations = relations(habitTags, ({ one }) => ({
 }));
 
 // Typescript Integration: Automatically infer types from tables
+/**
+ * This allows us to have type safety when working with our database models,
+ * ensuring that we are using the correct fields and data types when inserting or selecting data,
+ * and it also helps with autocompletion in our IDE, making development faster and less error-prone.
+ */
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 export type Habit = typeof habits.$inferSelect;
@@ -138,7 +143,13 @@ export type HabitTag = typeof habitTags.$inferSelect;
  * Insert schema & select schema are different because of this, insert schema will have optional fields for auto-generated columns
  */
 
-// Auto generated ZOD Schemas for insert and select operations
+/**
+ * Auto generated ZOD Schemas for insert and select operations
+ * Use this for validation in routes, e.g. validateBody(insertUserSchema) for registration route,
+ * and validateBody(selectUserSchema) for login route (if we want to validate login input as well) - \
+ * this ensures that the data we receive in our API endpoints is valid and matches our database schema,
+ * reducing errors and improving security.
+ */
 export const insertUserSchema = createInsertSchema(users);
 export const selectUserSchema = createSelectSchema(users);
 export const insertHabitSchema = createInsertSchema(habits);
